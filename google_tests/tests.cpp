@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../spinlock.cpp"
+#include "../spinlock.hpp"
 
 TEST(LockTests, LockUnlock) {
   fairlock::SpinLock spinlock;
@@ -30,10 +30,4 @@ TEST(TryLockTests, TryAfterLock) {
   spinlock.Lock();
   ASSERT_FALSE(spinlock.TryLock());
   spinlock.Unlock();
-}
-
-
-int main(int argc, char **argv) {
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
 }
