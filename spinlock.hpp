@@ -5,11 +5,11 @@
 namespace fairlock { // TicketLock
   class SpinLock {
   public:
-    void Lock();
+    void lock();
 
-    void Unlock();
+    void unlock();
 
-    bool TryLock();
+    bool try_lock();
 
   private:
     std::atomic<uint64_t> owner_ticket_{0};

@@ -1,7 +1,7 @@
 #include "spinlock.hpp"
 
 namespace fairlock {
-  void SpinLock::Lock() {
+  void SpinLock::lock() {
     const uint64_t ticket = next_ticket_.fetch_add(1);
     Spinner spinner;
     while (ticket != owner_ticket_.load()) {
@@ -9,11 +9,11 @@ namespace fairlock {
     }
   }
 
-  void SpinLock::Unlock() {
+  void SpinLock::unlock() {
     owner_ticket_.fetch_add(1);
   }
 
-  bool SpinLock::TryLock() {
+  bool SpinLock::try_lock() {
     uint64_t owner = owner_ticket_.load();
     return next_ticket_.compare_exchange_strong(owner, owner + 1);
     // if next == owner, then next = owner + 1
